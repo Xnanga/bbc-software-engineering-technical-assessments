@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import Logo from './logo/logo';
-import fetchData from '../dataFetcher';
-import Scorecard from './Scorecard';
-import './Scoreboard.css';
+import React, { useState, useEffect } from "react";
+import Logo from "./logo/logo";
+import fetchData from "../dataFetcher";
+import Scorecard from "./Scorecard";
+import "./Scoreboard.css";
 import PartyLinks from "./PartyLinks";
 
 function Scoreboard() {
@@ -32,17 +32,21 @@ function Scoreboard() {
         <Logo language="en" />
       </header>
       <main>
-        {
-          loading ? <h2>Loading...</h2> :
-          error ? <h1>Error</h1> :
+        {loading ? (
+          <h2>Loading...</h2>
+        ) : error ? (
+          <h1>Error</h1>
+        ) : (
           <>
             <h1>Results</h1>
             <Scorecard results={results} />
-            <a className="Scoreboard-refresh">Refresh</a>
+            <button onClick={getData} className="Scoreboard-refresh">
+              Refresh
+            </button>
             <h1>Learn more about the parties...</h1>
             <PartyLinks />
           </>
-        }
+        )}
       </main>
     </div>
   );
