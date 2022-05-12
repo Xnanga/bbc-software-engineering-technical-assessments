@@ -5,6 +5,16 @@ import Scorecard from "./Scorecard";
 import "./Scoreboard.css";
 import PartyLinks from "./PartyLinks";
 
+const matchCandidateWithVotesById = (resultData, candidateData) => {
+  const combinedData = resultData.map((result) => {
+    const candidate = candidateData.find((candidate) => {
+      return candidate.id === result.candidateId;
+    });
+    return { ...result, candidateName: candidate.name };
+  });
+  return combinedData;
+};
+
 function Scoreboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -14,7 +24,13 @@ function Scoreboard() {
     try {
       setLoading(true);
       const resultData = await fetchData();
-      setResults(resultData.results);
+      // console.log(resultData);
+      const combinedResultsAndCandidateData = matchCandidateWithVotesById(
+        resultData.results,
+        resultData.candidateData
+      );
+
+      setResults(combinedResultsAndCandidateData);
       setLoading(false);
     } catch (e) {
       setLoading(false);
